@@ -22,7 +22,7 @@
 
             <div class ="textfield">
                 <label for ="senha">Senha</label>
-                <input type="password" name ="senha" placeholder="Senha" id="valpass" required formControlName="pass">
+                <input type="password" placeholder="Senha" id="valpass" required formControlName="pass">
                 <div *ngIf="pass.invalid && formDir.submitted" class="error-validate"> 
                     <p *ngIf="pass.errors?.['required']">Senha obrigatória</p>
                 </div>

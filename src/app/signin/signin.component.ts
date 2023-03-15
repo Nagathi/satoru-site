@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class SigninComponent {
 
-  img: string = 'assets/satoru-backg.jpeg'
+  img: string = 'https://cdn.discordapp.com/attachments/1085586353812672583/1085586568875618455/satoru-backg.jpeg'
   userForm!: FormGroup
 
   ngOnInit(): void{

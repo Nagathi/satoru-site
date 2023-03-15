@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { enviroment } from 'enviroment';
+import { Personagem } from './personagem.model';
 
 @Component({
   selector: 'app-home',
@@ -7,14 +9,30 @@ import { Component } from '@angular/core';
   inputs: ['nome']
 })
 export class HomeComponent {
-  img1: string = 'assets/imagens/img1.webp'
-  img2: string = 'assets/imagens/img2.webp'
-  img3: string = 'assets/imagens/img3.webp'
-  img4: string = 'assets/imagens/img4.webp'
-  img5: string = 'assets/imagens/img5.webp'
-  img6: string = 'assets/imagens/img6.webp'
-  img7: string = 'assets/imagens/img7.webp'
-  img8: string = 'assets/imagens/img8.webp'
-  img9: string = 'assets/imagens/img9.webp'
+
+  baseUrl: string = enviroment.baseUrl;
+  pathListarPersonagens: string = enviroment.pathListarPersonagens;
+
+  personagens: Personagem[]
+  constructor(){
+    this.personagens = []
+  }
+
+  ngOnInit(){
+    this.findAll();
+  }
+
+  listar_personagens(retorno: Personagem[]){
+    for(let i = 0; i < retorno.length; i++){
+      this.personagens[i] = retorno[i]
+    }
+  }
+
+  findAll(){
+    fetch(`${this.baseUrl}/${this.pathListarPersonagens}`)
+    .then(retorno => retorno.json())
+    .then(retorno => this.listar_personagens(retorno))
+    
+  }
  
 }
