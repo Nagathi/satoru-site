@@ -1,0 +1,51 @@
+<div class = "main-login">
+
+    <div class = "left-login">
+        
+        <h1>Cadastre-se</h1>
+        <img [src]="img" class="left-login-image">
+    </div>
+    <div class ="right-login">
+
+        <form class="card-login" (ngSubmit)="submit()" #formDir="ngForm" [formGroup]="userForm">
+
+            <h1>Sign-in</h1>
+
+            <div class ="textfield">
+                <label for ="nome">Nome</label>
+                <input type="text" name ="nome" placeholder="Nome" id="valuser" formControlName="name">
+                <div *ngIf="name.invalid && formDir.submitted" class="error-validate"> 
+                    <p *ngIf="name.errors?.['required']">Nome obrigatório</p>
+                </div>
+            </div>
+
+            <div class ="textfield">
+                <label for ="email">E-mail</label>
+                <input type="email" name ="email" placeholder="E-mail" id="valuser" formControlName="email">
+                <div *ngIf="email.invalid && formDir.submitted" class="error-validate"> 
+                    <p *ngIf="email.errors?.['required']">E-mail obrigatório</p>
+                </div>
+            </div>
+
+            <div class ="textfield">
+                <label for ="usuario">Usuário</label>
+                <input type="text" name ="usuario" placeholder="Usuário" id="valuser" formControlName="user">
+                <div *ngIf="user.invalid && formDir.submitted" class="error-validate"> 
+                    <p *ngIf="user.errors?.['required']">Usuário obrigatório</p>
+                </div>
+            </div>
+
+            <div class ="textfield">
+                <label for ="senha">Senha</label>
+                <input type="password" name ="senha" placeholder="Senha" id="valpass" formControlName="pass">
+                <div *ngIf="pass.invalid && formDir.submitted" class="error-validate"> 
+                    <p *ngIf="pass.errors?.['required']">Senha obrigatória</p>
+                </div>
+            </div>
+
+            <button onclick="submit()" class="btn-login">Cadastrar</button>
+
+            </form>
+    </div>
+
+</div>

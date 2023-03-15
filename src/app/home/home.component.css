@@ -1,0 +1,25 @@
+
+.conteudo { 
+    margin-bottom: 20px; 
+    cursor: pointer; 
+    text-align: center;
+}
+.conteudo p {
+    background-color: #d84c72;
+    color: whitesmoke;
+    padding: 5px 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.conteudo p:hover {
+    transform: rotate(-2deg);    
+}
+
+#conteudos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#conteudos a{
+   text-decoration: none;
+}
