@@ -4,4 +4,5 @@ export const enviroment = {
     pathListarUsuarios: 'listar_usuarios',
     pathCadastrarPersonagens: 'cadastrar_personagens',
     pathCadastrarUsuarios: 'cadastrar_usuarios',
+    pathEditarPersonagens: 'editar_personagens'
 }

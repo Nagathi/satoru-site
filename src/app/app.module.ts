@@ -8,14 +8,20 @@ import { roteando } from './app.routing';
 import { HomeComponent } from './home/home.component';
 import { SigninComponent } from './signin/signin.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'
+import { HeaderComponent } from './header/header.component';
+import { LoggoutComponent } from './loggout/loggout.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CadastrarComponent } from './cadastrar/cadastrar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    SigninComponent
+    SigninComponent,
+    HeaderComponent,
+    LoggoutComponent,
+    CadastrarComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +29,9 @@ import { HttpClientModule } from '@angular/common/http'
     roteando,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+  ],
+  exports: [
   ],
   providers: [],
   bootstrap: [AppComponent]

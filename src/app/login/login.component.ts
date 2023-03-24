@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { enviroment } from 'enviroment';
+import { LoginService } from '../services/login.service';
 import { Usuario } from './usuario.model';
 
 @Component({
@@ -9,14 +10,15 @@ import { Usuario } from './usuario.model';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  img: string = 'https://cdn.discordapp.com/attachments/1085586353812672583/1085586568875618455/satoru-backg.jpeg'
-  baseUrl: string = enviroment.baseUrl
-  path: string = enviroment.pathListarUsuarios
-  userForm!: FormGroup
-  usuarios: Usuario[]
-  isLogado: Boolean
 
-  constructor(){
+  img: string = 'https://cdn.discordapp.com/attachments/1085586353812672583/1085586568875618455/satoru-backg.jpeg'
+  baseUrl: string = enviroment.baseUrl;
+  path: string = enviroment.pathListarUsuarios;
+  userForm!: FormGroup;
+  usuarios: Usuario[];
+  isLogado: boolean;
+
+  constructor(private service: LoginService){
     this.usuarios = []
     this.isLogado = false
   }
@@ -29,8 +31,6 @@ export class LoginComponent {
       pass: new FormControl('', Validators.required)
     });
 
-    this.findAll()
-
   }
 
   get pass(){
@@ -41,31 +41,7 @@ export class LoginComponent {
   }
 
 
-
-  findAll(){
-    fetch(`${this.baseUrl}/${this.path}`)
-    .then(retorno => retorno.json())
-    .then(retorno => this.saveAll(retorno))
-  }
-
-  saveAll(retorno: Usuario[]){
-    for(let i = 0; i < retorno.length; i++){
-      this.usuarios[i] = retorno[i]
-    }
-  }
-
   submit(){
-    for(let i = 0; i < this.usuarios.length; i++){
-
-      console.log(this.usuarios[i].usuario)
-      console.log(this.usuarios[i].senha)
-      console.log(this.userForm.value.user)
-      console.log(this.userForm.value.pass)
-      if((this.usuarios[i].usuario == this.userForm.value.user) && (this.usuarios[i].senha == this.userForm.value.pass)){
-        this.isLogado = true;
-        console.log("LOGADO")
-      }
-    }
+    this.service.login(this.userForm.value.user, this.userForm.value.pass)
   }
-
 }

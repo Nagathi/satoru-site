@@ -1,10 +1,9 @@
-<header>conteudos</header>
-      <section id="conteudos">
-        <a routerLink="/" href="#" *ngFor="let personagem of personagens">
-          <section class="conteudo">
-            <img src="{{personagem.imagem}}">
-            <p>{{personagem.nome}}</p>
-            <p>{{personagem.anime}}</p>
-          </section>
-        </a>
+<section id="conteudos">
+    <a routerLink="/" href="#" *ngFor="let personagem of personagens">
+      <section class="conteudo">
+        <img src="{{personagem.imagem}}">
+        <p>{{personagem.nome}}</p>
+        <p>{{personagem.anime}}</p>
       </section>
+    </a>
+</section>

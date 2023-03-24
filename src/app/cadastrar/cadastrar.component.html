@@ -1,0 +1,37 @@
+
+<form #formDir="ngForm" [formGroup]="persoForm">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Foto</label>
+      <input type="email" class="form-control" formControlName="imagem" placeholder="Ex:. www.img.com">
+      <small id="emailHelp" class="form-text text-muted">Envie o Link do upload da foto</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Nome</label>
+        <input type="email" class="form-control" formControlName="nome" placeholder="Ex:. Satoru Gojo">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Anime</label>
+        <input type="email" class="form-control" formControlName="anime" placeholder="Ex:. Jujutsu Kaisen">
+      </div>
+
+    <button class="btn btn-success" *ngIf="btnSelect" (click)="enviar()" >Enviar</button>
+    <button class="btn btn-info" *ngIf="btnSelect" (click)="alterar()" >Alterar</button>
+    <button class="btn btn-danger" *ngIf="btnSelect" (click)="deletar()" >Deletar</button>
+    
+  </form>
+
+  <table class="table table-striped">
+    <thead>
+      <th>#</th>
+      <th>Nome</th>
+      <th>Anime</th>
+      <th>Ação</th>
+    </thead>
+    <tbody *ngFor="let personagem of personagens">
+      <td>{{personagem.codigo}}</td>
+      <td>{{personagem.nome}}</td>
+      <td>{{personagem.anime}}</td>
+      <td><button class="btn btn-secondary" (click)="selecionar(personagem.codigo)">Selecionar</button></td>
+    </tbody>
+  </table>
+

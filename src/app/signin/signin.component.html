@@ -7,7 +7,7 @@
     </div>
     <div class ="right-login">
 
-        <form class="card-login" (ngSubmit)="submit()" #formDir="ngForm" [formGroup]="userForm">
+        <form class="card-login" #formDir="ngForm" [formGroup]="userForm">
 
             <h1>Sign-in</h1>
 
@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <button onclick="submit()" class="btn-login">Cadastrar</button>
+            <button (click)="cadastrar()" class="btn-login">Cadastrar</button>
 
             </form>
     </div>

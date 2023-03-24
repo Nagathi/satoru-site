@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { enviroment } from 'enviroment';
+import { PersonagemService } from '../services/personagem.service';
 import { Personagem } from './personagem.model';
 
 @Component({
@@ -14,25 +15,25 @@ export class HomeComponent {
   pathListarPersonagens: string = enviroment.pathListarPersonagens;
 
   personagens: Personagem[]
-  constructor(){
+  constructor(
+    private personagem: PersonagemService
+  ){
     this.personagens = []
   }
 
   ngOnInit(){
     this.findAll();
+    this.listar()
   }
 
-  listar_personagens(retorno: Personagem[]){
-    for(let i = 0; i < retorno.length; i++){
-      this.personagens[i] = retorno[i]
-    }
+  listar(){
+    this.personagem.emitirPersonagem.subscribe(
+      value => this.personagens = value
+    )
   }
 
   findAll(){
-    fetch(`${this.baseUrl}/${this.pathListarPersonagens}`)
-    .then(retorno => retorno.json())
-    .then(retorno => this.listar_personagens(retorno))
-    
+    this.personagem.findAll()
   }
  
 }
