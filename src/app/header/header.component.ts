@@ -15,7 +15,7 @@ export class HeaderComponent{
 
   searchForm!: FormGroup;
   APIURL: string = enviroment.baseUrl
-  path: string = enviroment.pathListarPersonagens
+  userForm!: FormGroup;
   isLogado: boolean;
   personagens: Personagem[] = []
   usuario: any = {
@@ -27,6 +27,7 @@ export class HeaderComponent{
     tipo: ''
   }
 
+
   constructor(private service: LoginService,
               private personagem: PersonagemService,
               private http: HttpClient){
@@ -35,8 +36,6 @@ export class HeaderComponent{
   }
 
   ngOnInit(){
-    this.isLogado = this.service.getLogado();
-    this.usuario = this.service.getUsuario()
     this.service.emitirUsuario.subscribe(
       value => this.usuario = value
     )
@@ -47,21 +46,44 @@ export class HeaderComponent{
       value => this.personagens = value
     )
     this.searchForm = new FormGroup({
-      nome: new FormControl(''),
+      string: new FormControl(''),
     });
     
   }
 
-  get nome(){
-    return this.searchForm.get('nome')
+  get string(){
+    return this.searchForm.get('string')
   }
 
   buscar(){
-    for(let i = 0; i < this.personagens.length;i++){
-      if(this.searchForm.value.nome == this.personagens[i].nome){
-        console.log(this.personagens[i])
-      } 
-    }
+    this.findAllByNome(this.searchForm.value.string)
+    this.findAllByAnime(this.searchForm.value.string)
+  }
+
+  findAllByNome(string: string){
+    this.http.get<any[]>(`${this.APIURL}/personagens/buscar_nome?nome=${string}`)
+    .subscribe(
+      response => {
+        this.personagem.saveAll(response)
+        // Faça algo com os produtos retornados
+      },
+    );
+  }
+
+  findAllByAnime(string: string){
+    this.http.get<any[]>(`${this.APIURL}/personagens/buscar_anime?anime=${string}`)
+    .subscribe(
+      response => {
+        this.personagem.saveAll(response)
+        // Faça algo com os produtos retornados
+      },
+    );
+  }
+
+  saveAll(response: Personagem[]){
+    for(let i = 0; i < response.length; i++){
+      this.personagens[i] = response[i]
+    }  
   }
 
   sair(){

@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { enviroment } from 'enviroment';
 import { Usuario } from '../login/usuario.model';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -13,69 +14,47 @@ export class LoginService {
   usuarios: Usuario[];
 
   isLogado: boolean;
-  usuario = {
-    codigo: '',
-    nome: '',
-    email: '',
-    usuario: '',
-    senha: '',
-    tipo: ''
-  }
 
   emitirStatus = new EventEmitter<boolean>();
-  emitirUsuario = new EventEmitter<Object>();
+  emitirUsuario = new EventEmitter<Usuario>();
 
 
-  constructor(private router: Router) { 
+  constructor(private router: Router,
+              private http: HttpClient) { 
 
     this.usuarios = []
     this.isLogado = false
-    this.findAll();
     
   }
 
   ngOnInit() {
   }
 
-  findAll(){
-    fetch(`${this.baseUrl}/${this.path}`)
-    .then(retorno => retorno.json())
-    .then(retorno => this.saveAll(retorno))
-  }
-
-  saveAll(retorno: Usuario[]){
-    for(let i = 0; i < retorno.length; i++){
-      this.usuarios[i] = retorno[i]
-    }
-  }
-
   login(usuario: string, senha: string){
-    for(let i = 0; i < this.usuarios.length; i++){
-      if((this.usuarios[i].usuario == usuario) && (this.usuarios[i].senha == senha)){
+    this.http.get<Usuario>(`${this.baseUrl}/login?usuario=${usuario}&senha=${senha}`)
+    .subscribe(
+      response => {
 
-        const objUsuario = {
-          codigo: this.usuarios[i].id,
-          nome: this.usuarios[i].nome,
-          email: this.usuarios[i].email,
-          usuario: this.usuarios[i].usuario,
-          senha: this.usuarios[i].senha,
-          tipo: this.usuarios[i].tipo
+        const objUsuario: Usuario = {
+          id: response.id,
+          nome: response.nome,
+          email: response.email,
+          usuario: response.usuario,
+          senha: response.senha,
+          tipo: response.tipo
         }
 
         this.isLogado = true;
         this.router.navigate(['/home'])
-        this.emitirUsuario.emit(objUsuario);
         this.emitirStatus.emit(this.isLogado)
-      }
-    }
+        this.emitirUsuario.emit(objUsuario)
+      },
+    );
+
   }
 
   getLogado(){
     return this.isLogado
-  }
-
-  getUsuario(){
-    return this.usuario
   }
 
   setLogado(valor: boolean){

@@ -52,13 +52,13 @@ export class CadastrarComponent {
       anime: this.persoForm.value.anime
     }
 
-    this.http.post(`${this.APIURL}/${this.path}`, objPersonagem).subscribe(
+    this.http.post(`${this.APIURL}/personagens/${this.path}`, objPersonagem).subscribe(
       retorno => console.log(retorno)
     )
   }
 
   findAll(){
-    fetch(`${this.APIURL}/${this.path2}`)
+    fetch(`${this.APIURL}/personagens/${this.path2}`)
     .then(retorno => retorno.json())
     .then(retorno => this.saveAll(retorno))
   }

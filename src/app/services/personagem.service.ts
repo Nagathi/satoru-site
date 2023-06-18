@@ -14,20 +14,23 @@ export class PersonagemService {
   personagens: Personagem[] = []
   emitirPersonagem = new EventEmitter<Personagem[]>()
 
-  constructor(
+  constructor(private http: HttpClient
   ) { }
 
   findAll(){
-    fetch(`${this.APIURL}/${this.path}`)
-    .then(retorno => retorno.json())
-    .then(retorno => this.saveAll(retorno))
+    this.http.get<any[]>(`${this.APIURL}/personagens/listar_personagens`)
+    .subscribe(
+      response => {
+        this.saveAll(response)
+      },
+    );
   }
 
-  saveAll(retorno: Personagem[]){
-    for(let i = 0; i < retorno.length; i++){
-      this.personagens[i] = retorno[i]
-    }  
-    this.emitirPersonagem.emit(this.personagens)
+  saveAll(response: Personagem[]){
+    for(let i = 0; i < response.length; i++){
+      this.personagens[i] = response[i]
+    }
+    this.emitirPersonagem.emit(this.personagens) 
   }
 
 }
